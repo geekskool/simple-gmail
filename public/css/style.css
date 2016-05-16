@@ -5,59 +5,63 @@
     align-items: center;
     display: flex;
 }
+
 .main {
     margin-top: 10%;
     margin-left: 15%;
     margin-right: 15%;
-    margin-bottom: 10%;
-    /*font-family: "Impact,Charcoal,sans-serif";
-    font-size: 15px;*/
-    
+    margin-bottom: 10%;   
 }
-/*a {
-    font-size: 20px;
-}*/
+
 .signOutDiv {
     margin-left: 15%;
     margin-right: 10%;
 }
+
 .headerDiv {
     width: 100%;
     height: 50px;
     background-color: #f2f2f2;
     border-bottom: inset;
 }
+
 .fromDiv {
     float: left;
     width: 25%;
     background-color: #f2f2f2;
 }
+
 .subjectDiv {
     width: 50%;
     background-color: #f2f2f2;
     text-align: center;
 }
+
 .dateDiv {
     float: right;
     width: 25%;
     background-color: #f2f2f2;
 }
+
 .contentDiv {
     width: 100%;
     height: 700px;
 }
+
 .messageDiv {
     width: 100%;
     height: 600px;
     background-color: white;
     overflow: auto;
 }
+
 .footerDiv {
     width: 100%;
     height: 50px;
     background-color: #f2f2f2;
     align-items: center;
 }
+
 .button {
     background-color: white;
     font-size: 16px;
@@ -65,17 +69,16 @@
     border: 2px solid gray;
     transition-duration: 0.4s;
 }
+
 .button:hover {
     background-color: gray;
     color: white;
 }
+
 #signOut {
-    /*align-content: center;*/
     float: right;
 }
+
 .inline {
     display: inline-block;
 }
-/*@media screen and (max-width: 320px){
-	
-}*/
