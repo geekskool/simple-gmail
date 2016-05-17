@@ -13,8 +13,6 @@ function showContentDiv() {
 function onSignIn() {
     document.getElementById("signInDiv").style.display = "none";
     document.getElementById("signOutDiv").style.display = "block";
-    document.getElementById("main").style.display = "block";
-    document.getElementById("mainDiv").style.display = "block";
 }
 
 function signOut() {
@@ -105,7 +103,7 @@ function displayMessages() {
     var request = gapi.client.gmail.users.messages.list({
       'userId': 'me',
       'labelIds': 'UNREAD',
-      'maxResults': 5
+      'maxResults': 10
     });
     request.execute(function(response){
         response.messages.forEach(function(message) {
@@ -119,15 +117,16 @@ function displayMessages() {
 }
 
 function addMessageRow(message) { 
-    document.getElementById("fromDiv").innerHTML = getHeader(message.payload.headers, 'From');
-    document.getElementById("subject").innerHTML = getHeader(message.payload.headers, 'Subject');
+    var main = document.getElementById("main");
+    var template = document.querySelector(".mainDiv");
+    var messageNode = template.cloneNode(true);
+    messageNode.style.display = "block";
+    messageNode.querySelector(".fromDiv").textContent = getHeader(message.payload.headers, 'From');
+    messageNode.querySelector(".subjectDiv").textContent = getHeader(message.payload.headers, 'Subject');
     var day = getHeader(message.payload.headers, 'Date');
-    document.getElementById("dateDiv").innerHTML = getDateTime(day);
-    document.getElementById("messageDiv").innerHTML = getMessageBody(message.payload);
-    var element = document.getElementById("mainDiv");
-    var newDiv = element.cloneNode(true);
-    newDiv.id = "mainDiv" + message.id;
-    element.parentNode.appendChild(newDiv);
+    messageNode.querySelector(".dateDiv").textContent = getDateTime(day);
+    messageNode.querySelector(".messageDiv").innerHTML = getMessageBody(message.payload);
+    main.appendChild(messageNode);
 }
 
 function getDateTime(timeStamp) {
