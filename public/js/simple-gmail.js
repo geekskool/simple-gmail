@@ -39,25 +39,11 @@ function handleAuthResult(authResult) {
     } 
 }
 
-function handleAuthClick(event) {
-    gapi.auth.authorize({
-        client_id: CLIENT_ID, scope: SCOPES, immediate: false },
-        handleAuthResult);
-    return false;
-}
-
 function loadGmailApi() {
     gapi.client.load('gmail', 'v1', displayMessages);
 }
 
-function checkLabel() {
-    listLabels('Done');
-    listLabels('Respond');
-    listLabels('Delegate');
-    listLabels('Defer');
-}
-
-function listLabels(labelName) {
+function listLabels() {
     var found = false;
     var request = gapi.client.gmail.users.labels.list({
       'userId': 'me'
@@ -71,16 +57,14 @@ function listLabels(labelName) {
               arr[i] = label.name;
             }
         }
-        for (var j = 0; j < arr.length; j++) {
-            if (arr[j] === labelName) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            console.log(labelName);
-            createLabel(labelName);          
-        }
+        if (arr.indexOf("Done") === -1)
+            createLabel("Done"); 
+        if (arr.indexOf("Respond") === -1)
+            createLabel("Respond"); 
+        if (arr.indexOf("Delegate") === -1)
+            createLabel("Delegate"); 
+        if (arr.indexOf("Defer") === -1)
+            createLabel("Defer");          
     });
 }
 
@@ -94,12 +78,11 @@ function createLabel(newLabelName) {
         }
     });
     request.execute(function(resp){
-        console.log("label created");
     });
 }
 
 function displayMessages() {
-    checkLabel();
+    listLabels();
     var request = gapi.client.gmail.users.messages.list({
       'userId': 'me',
       'labelIds': 'UNREAD',
