@@ -12,7 +12,7 @@ function showContentDiv() {
 
 function onSignIn() {
     document.getElementById("signInDiv").style.display = "none";
-    document.getElementById("signOutDiv").style.display = "block";
+    // document.getElementById("signOutDiv").style.display = "block";
 }
 
 function signOut() {
@@ -103,7 +103,7 @@ function displayMessages() {
     var request = gapi.client.gmail.users.messages.list({
       'userId': 'me',
       'labelIds': 'UNREAD',
-      'maxResults': 10
+      'maxResults': 4
     });
     request.execute(function(response){
         response.messages.forEach(function(message) {

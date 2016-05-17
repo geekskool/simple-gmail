@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id" content="956956950540-qkifems6t6ie5sp47vs9hfmi94par1bc.apps.googleusercontent.com">
     <title>Simple Gmail</title>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/simple-gmail.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth" async defer></script>
     <script type="text/javascript" src="js/simple-gmail.js"></script>
@@ -12,18 +12,18 @@
 <body>
     <div id="signInDiv" class="g-signin2" data-onsuccess="onSignIn">
     </div> 
-    <div id="signOutDiv" class="signOutDiv" style="display: none;">
+    <!-- <div id="signOutDiv" class="signOutDiv" style="display: none;">
             <a id="signOut" href="#" onclick="signOut();">Sign out</a>
-    </div>
+    </div> -->
     <div id="main" class= "main">
         <div class="mainDiv" style="display: none;">
             <div class="headerDiv">
                 <div class="fromDiv inline">
                 </div>
-                <div class="subjectDiv inline">
-                    <a href="javascript:;" class="subject" onclick="showContentDiv()"></a>
-                </div>
                 <div class="dateDiv inline">
+                </div>
+                <div class="subjectDiv">
+                    <a href="javascript:;" class="subject"></a>
                 </div>
             </div>
             <div class="contentDiv" style="display: block;">

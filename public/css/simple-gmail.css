@@ -1,4 +1,66 @@
-body {
+body, div {
 	margin: 0;
 	padding: 0;
+	border: 0;
+}
+
+.fromDiv {
+	text-align: left;
+	width: 49%;
+	color: gray;
+	font-size: 12px;
+}
+
+.dateDiv {
+	text-align: right;
+	width: 49%;
+	color: gray;
+	font-size: 12px;
+	vertical-align: top;
+}
+
+.inline {
+	display: inline-block;
+}
+
+.button {
+	background-color: white;
+    border: none;
+    color: gray;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    align-items: center;
+    cursor: pointer;
+    width: 24%;
+}
+
+.headerDiv {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.footerDiv {
+	width: 100%;
+	padding-bottom: 30px;
+}
+
+.subjectDiv {
+	padding-top: 20px;
+	font-size: 16px;
+}
+
+.messageDiv {
+	padding-top: 20px;
+	font-size: 14px;
+	padding-bottom: 20px;
+}
+
+@media only screen and (min-width: 720px) {
+    .mainDiv {
+        width: 720px;
+        margin: auto;
+    }
 }
