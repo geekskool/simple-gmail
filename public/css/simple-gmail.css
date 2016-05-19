@@ -38,6 +38,13 @@ body, div {
     width: 24%;
 }
 
+/*button: disabled {
+    cursor: default;
+    pointer-events: none;
+    color: #c0c0c0;
+    background-color: #ffffff;
+}*/
+
 .headerDiv {
 	width: 100%;
 	box-sizing: border-box;
@@ -45,7 +52,7 @@ body, div {
 
 .footerDiv {
 	width: 100%;
-	padding-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 .subjectDiv {
@@ -63,6 +70,12 @@ body, div {
     .mainDiv {
         width: 720px;
         margin: auto;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .mainDiv {
+        margin: 20px;
     }
 }
 

@@ -2,16 +2,10 @@ var CLIENT_ID = '956956950540-qkifems6t6ie5sp47vs9hfmi94par1bc.apps.googleuserco
 var apiKey = 'AIzaSyBOHcY998qIe5lY_w3iwAcothkBCLUO1To';
 var SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.readonly'];
 
-function showContentDiv() {
-    var element = document.getElementById("contentDiv");
-    if (element.style.display === "none") {
-        element.style.display = "block";
-    } else
-        element.style.display = "none";
-}
-
 function onSignIn() {
-    document.getElementById("signInDiv").style.display = "none";
+    // document.getElementById("signInDiv").style.display = "none";
+    var node = document.getElementById("signIn");
+    node.parentNode.removeChild(node);
     // document.getElementById("signOutDiv").style.display = "block";
 }
 
@@ -43,7 +37,7 @@ function loadGmailApi() {
     gapi.client.load('gmail', 'v1', displayMessages);
 }
 
-function listLabels() {
+function checkLabels() {
     var found = false;
     var request = gapi.client.gmail.users.labels.list({
       'userId': 'me'
@@ -82,7 +76,7 @@ function createLabel(newLabelName) {
 }
 
 function displayMessages() {
-    listLabels();
+    checkLabels();
     var request = gapi.client.gmail.users.messages.list({
       'userId': 'me',
       'labelIds': 'UNREAD',
@@ -109,7 +103,72 @@ function addMessageRow(message) {
     var day = getHeader(message.payload.headers, 'Date');
     messageNode.querySelector(".dateDiv").textContent = getDateTime(day);
     messageNode.querySelector(".messageDiv").innerHTML = getMessageBody(message.payload);
+    addButtonListeners(messageNode, message);
     main.appendChild(messageNode);
+}
+
+function addButtonListeners(messageNode, message) {
+    var nodeList = messageNode.querySelectorAll(".button");
+    nodeList[0].addEventListener("click", function() {
+        getLabelId("Done", message.id);
+        messageNode.style.display = "none";
+    });
+    nodeList[1].addEventListener("click", function() {
+        var replyTo = getHeader(message.payload.headers, 'From');
+        var replySubject = "Re: " + getHeader(message.payload.headers, 'Subject');
+        var replyBody = "message body";
+        var mailTo = "mailto:" + replyTo + "?Subject=" + replySubject + "&body=" + replyBody;
+        var aTag = document.createElement("a"); 
+        aTag.setAttribute('href', mailTo);   
+        nodeList[1].appendChild(aTag);    
+        var event = new Event('click');
+        aTag.dispatchEvent(event);
+    });
+    nodeList[2].addEventListener("click", function() {
+        var forwardSubject = "Fwd: " + getHeader(message.payload.headers, 'Subject');
+        var forwardBody = "message body";
+        var mailTo = "mailto:?Subject=" + forwardSubject + "&body=" + forwardBody;
+        var aTag = document.createElement("a"); 
+        aTag.setAttribute('href', mailTo);   
+        nodeList[2].appendChild(aTag);    
+        var event = new Event('click');
+        aTag.dispatchEvent(event);
+    });
+    nodeList[3].addEventListener("click", function() {
+        getLabelId("Defer", message.id);
+        messageNode.style.display = "none";
+    });
+}
+
+function getLabelId(labelName, messageId) {
+    var labelId;
+    var request = gapi.client.gmail.users.labels.list({
+      'userId': 'me'
+    });
+    request.execute(function(resp) {
+        var labels = resp.labels;
+        if (labels && labels.length > 0) {
+            for (i = 0; i < labels.length; i++) {
+                var label = labels[i];
+                if (label.name === labelName) {
+                    labelId = label.id;
+                    modifyLabel(labelId, messageId);
+                }              
+            }
+        } 
+    });
+}
+
+function modifyLabel(labelId, messageId) {
+    var addLabelId = [labelId];
+    var request = gapi.client.gmail.users.messages.modify({
+        'userId': 'me',
+        'id': messageId,
+        'addLabelIds': addLabelId
+    });
+    request.execute(function(resp) {  
+      alert("Message added successfully!");
+    });
 }
 
 function getDateTime(timeStamp) {

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script>
+		function sendmail() {
+			var aTag = document.createElement("a");	
+			aTag.setAttribute('href', 'mailto:');	
+			document.body.appendChild(aTag);	
+			var event = new Event('click');
+			aTag.dispatchEvent(event);
+		}	
+	</script>
+</head>
+<body>
+	<button onclick="sendmail()">click</button>
+	<div id="div1"></div>
+
+	<!-- <a href="#" id="Anchor">Click me</a>
+	<script>
+	    function myFunction() {
+	        alert('It was clicked');
+	    }
+	    var event = new Event('click');
+	    Anchor.addEventListener('click', myFunction, false);
+	    Anchor.dispatchEvent(event);
+	</script> -->
+</body>
+</html>
