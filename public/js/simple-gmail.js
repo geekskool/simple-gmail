@@ -80,7 +80,7 @@ function displayMessages() {
     var request = gapi.client.gmail.users.messages.list({
       'userId': 'me',
       'labelIds': 'UNREAD',
-      'maxResults': 4
+      'maxResults': 8
     });
     request.execute(function(response){
         response.messages.forEach(function(message) {
@@ -93,7 +93,7 @@ function displayMessages() {
     });
 }
 
-function addMessageRow(message) { 
+function addMessageRow(message) { //console.log(JSON.stringify(message, null, 4));
     var main = document.getElementById("main");
     var template = document.querySelector(".mainDiv");
     var messageNode = template.cloneNode(true);
@@ -111,7 +111,11 @@ function addButtonListeners(messageNode, message) {
     var nodeList = messageNode.querySelectorAll(".button");
     nodeList[0].addEventListener("click", function() {
         getLabelId("Done", message.id);
-        messageNode.style.display = "none";
+        messageNode.style.transition = "opacity 0.5s ease 0s";
+        messageNode.style.opacity = 0;
+        setTimeout(function() {
+            messageNode.style.display = "none";
+        }, 300);
     });
     nodeList[1].addEventListener("click", function() {
         var replyTo = getHeader(message.payload.headers, 'From');
@@ -132,11 +136,15 @@ function addButtonListeners(messageNode, message) {
         aTag.setAttribute('href', mailTo);   
         nodeList[2].appendChild(aTag);    
         var event = new Event('click');
-        aTag.dispatchEvent(event);
+        aTag.dispatchEvent(event);   
     });
     nodeList[3].addEventListener("click", function() {
         getLabelId("Defer", message.id);
-        messageNode.style.display = "none";
+        messageNode.style.transition = "opacity 0.5s ease 0s";
+        messageNode.style.opacity = 0;
+        setTimeout(function() {
+            messageNode.style.display = "none";
+        }, 300);
     });
 }
 
@@ -167,13 +175,47 @@ function modifyLabel(labelId, messageId) {
         'addLabelIds': addLabelId
     });
     request.execute(function(resp) {  
-      alert("Message added successfully!");
+      //alert("Message added successfully!");
     });
 }
 
 function getDateTime(timeStamp) {
+    var currentTime = new Date();//console.log(currentTime + " " + timeStamp)
+    var currentday = currentTime.getDate();
+    var currentMonthIndex = currentTime.getMonth();
+    var currentMonthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var currentMonth = currentMonthArray[currentMonthIndex];
+    var currentDate = currentday + currentMonth;
     var arr = timeStamp.split(' ');
     var date1 = arr[1] + arr[2];
+    var time1 = arr[4];
+    var timeArray = time1.split(':');
+    var time2 = [];
+    time2[0] = currentTime.getHours();
+    time2[1] = currentTime.getMinutes();
+    var hourDiff = Math.abs(timeArray[0] - time2[0]);
+    var minDiff = Math.abs(timeArray[1] - time2[1]);
+    if (currentDate === date1) {
+        if (hourDiff < 24 && hourDiff >= 1) {  
+            if (hourDiff === 1) {
+                return "an hr ago";
+            } else {
+                return hourDiff + "hrs ago";
+            }
+        } else {
+            if (minDiff < 1) {
+                return "just now";
+            }
+            if (minDiff === 1) {
+                return "a min ago";
+            } else {
+                return minDiff + "mins ago";
+            }
+        }
+    }
+    if (Math.abs(arr[1] - currentday) === 1) {
+        return "Yesterday";
+    }
     return date1;
 }
 

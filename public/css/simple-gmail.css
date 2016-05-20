@@ -5,6 +5,20 @@ body, div {
 	font-family: "Georgia, Times, Times New Roman, serif"
 }
 
+body {
+	background-color: #f5f5f5;
+	margin-top: 50px;
+}
+.mainDiv {
+	transition: all 3s ease-in-out;
+	-webkit-transition: all 3s ease-in-out;
+	-moz-transition: all 3s ease-in-out;
+	-ms-transition: all 3s ease-in-out;
+	-o-transition: all 3s ease-in-out;
+	background-color: white;
+	padding: 15px 0px 0px 15px;
+}
+
 .fromDiv {
 	text-align: left;
 	width: 49%;
@@ -36,14 +50,14 @@ body, div {
     align-items: center;
     cursor: pointer;
     width: 24%;
+
 }
 
-/*button: disabled {
-    cursor: default;
-    pointer-events: none;
-    color: #c0c0c0;
-    background-color: #ffffff;
-}*/
+.button:hover {
+    color: gray;
+    font-size: 18px;
+    /*text-shadow: 1px 1px 0px #000;*/
+}
 
 .headerDiv {
 	width: 100%;
@@ -75,7 +89,7 @@ body, div {
 
 @media only screen and (max-width: 720px) {
     .mainDiv {
-        margin: 20px;
+        margin: 20px; 
     }
 }
 
